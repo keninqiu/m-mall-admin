@@ -2,10 +2,10 @@ export default {
 	secret: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 	mongo: {
 		development: {
-			connectionString: 'mongodb://127.0.0.1:27017/mall'
+			connectionString: 'mongodb://keningqiu:82239252yanQ@ds239911.mlab.com:39911/mmall'
 		},
 		production: {
-			connectionString: 'mongodb://127.0.0.1:27017/mall'
+			connectionString: 'mongodb://keningqiu:82239252yanQ@ds239911.mlab.com:39911/mmall'
 		}
 	},
 	redis: {
