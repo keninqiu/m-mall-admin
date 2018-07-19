@@ -9,6 +9,7 @@ const Schema = mongoose.Schema({
 	}],
 	name     : String,
 	price    : Number,
+	type 	 : String,
 	remark   : String,
 	images   : Array,
 	create_at: {

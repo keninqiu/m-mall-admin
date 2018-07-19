@@ -77,7 +77,7 @@ app.use((req, res, next) => {
 
 // custom middleware
 app.use(/\/api/, tools)
-app.use(/^((?!sign\/up|sign\/in|captcha).)+$/, [
+app.use(/^((?!sign\/up|sign\/in|captcha|banner|classify|goods).)+$/, [
 	jwt({ secret: config.secret}), 
 	auth.verifyToken.bind(auth)
 ])

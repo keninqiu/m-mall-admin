@@ -23,6 +23,7 @@ class Ctrl extends RestBase{
         this.form = {
             name  : null,
             price : null,
+            type : null,
             remark: null,
             images: [],
             types : [],

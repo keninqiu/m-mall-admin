@@ -205,6 +205,7 @@ class Ctrl{
 		const body = {
 			name  : req.body.name, 
 			price : req.body.price, 
+			type  : req.body.type,
 			remark: req.body.remark, 
 			images: req.body.images, 
 			types : req.body.types, 
@@ -261,6 +262,7 @@ class Ctrl{
 		const body = {
 			name  : req.body.name, 
 			price : req.body.price, 
+			type  : req.body.type,
 			remark: req.body.remark, 
 			images: req.body.images, 
 			types : req.body.types, 
