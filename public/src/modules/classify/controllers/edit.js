@@ -21,6 +21,7 @@ class Ctrl extends RestBase{
                     id    : detail._id,
                     name  : detail.name,
                     remark: detail.remark,
+                    show_in_menu: detail.show_in_menu,
                 }
             }
         })
@@ -30,6 +31,7 @@ class Ctrl extends RestBase{
         this.form = {
             name  : null,
             remark: null,
+            show_in_menu: null,
         }
     }
 

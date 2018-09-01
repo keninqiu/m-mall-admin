@@ -47,7 +47,8 @@ app.use(log4js.connectLogger(logger('normal'), {level:'auto', format:':method :u
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
-
+//app.use(express.static(path.join(__dirname, 'assets')));
+//app.use(express.static(__dirname + '/assets'));
 app.use(cookieParser(config.secret))
 
 // set session.
@@ -77,7 +78,7 @@ app.use((req, res, next) => {
 
 // custom middleware
 app.use(/\/api/, tools)
-app.use(/^((?!sign\/up|sign\/in|captcha|banner|classify|goods|cart).)+$/, [
+app.use(/^((?!sign\/up|sign\/in|captcha|banner|classify|goods).)+$/, [
 	jwt({ secret: config.secret}), 
 	auth.verifyToken.bind(auth)
 ])

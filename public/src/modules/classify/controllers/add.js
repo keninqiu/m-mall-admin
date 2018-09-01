@@ -14,6 +14,7 @@ class Ctrl extends RestBase{
         this.form = {
             name  : null,
             remark: null,
+            show_in_menu: null,
         }
     }
 

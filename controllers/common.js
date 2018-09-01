@@ -30,6 +30,7 @@ class Ctrl{
 	 * 注册路由
 	 */
 	routes() {
+		this.app.post('/api/common/wxpay', this.wxPay.bind(this))
 		this.app.post('/api/common/file', this.uploadFile.bind(this))
 		this.app.post('/api/common/file/:id', this.delFile.bind(this))
 		this.app.post('/api/common/sign/check', this.signCheck.bind(this))
@@ -39,6 +40,9 @@ class Ctrl{
 		this.app.post('/api/common/createwxaqrcode', this.createwxaqrcode.bind(this))
 	}
 
+	wxPay() {
+		return res.tools.setJson(0, '微信支付调用成功')
+	}
 	/**
 	 * 获取 access_token
 	 */
@@ -151,10 +155,14 @@ class Ctrl{
 		.then(doc => {
 			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
 			filepath = 'public/' + doc.path
-			return doc.remove()
+			doc.remove()
+			return res.tools.setJson(0, '删除成功')
 		})
-		.then(doc => fs.unlinkAsync(filepath))
-		.then(doc => res.tools.setJson(0, '删除成功'))
+		.then(doc => {
+			if(fs.existsSync(filepath)) {
+				fs.unlinkAsync(filepath)
+			}
+		})
 		.catch(err => next(err))
 	}
 

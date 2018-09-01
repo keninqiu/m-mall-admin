@@ -197,15 +197,19 @@ class Ctrl{
 	 *     }
 	 */
 	post(req, res, next) {
+		var user_id = 0;
+		if(req.user) {
+			user_id = req.user._id;
+		}
 		const query = {
 			goods : req.body.goods, 
-			user : req.user._id, 
+			user : user_id, 
 		}
 
 		const body = {
 			goods : req.body.goods, 
 			total: Number(req.body.total) || 1, 
-			user : req.user._id, 
+			user : user_id, 
 		}
 
 		const p1 = proxy.goods.findByIdAsync(query.goods)

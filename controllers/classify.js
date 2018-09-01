@@ -25,7 +25,7 @@ class Ctrl{
 		this.app.get('/api/classify/:id', this.get.bind(this))
 		this.app.post('/api/classify', this.post.bind(this))
 		this.app.put('/api/classify/:id', this.put.bind(this))
-		this.app.delete('/api/classify/:id', this.delete.bind(this))
+		this.app.delete('/api/classify/:id', this.delete.bind(this)) 
 	}
 
 	/**
@@ -171,6 +171,7 @@ class Ctrl{
 		const body = {
 			name  : req.body.name, 
 			remark: req.body.remark, 
+			show_in_menu: req.body.show_in_menu,
 		}
 
 		this.model.post(body)
@@ -218,6 +219,7 @@ class Ctrl{
 		const body = {
 			name  : req.body.name, 
 			remark: req.body.remark, 
+			show_in_menu: req.body.show_in_menu,
 		}
 
 		this.model.put(query, body)
