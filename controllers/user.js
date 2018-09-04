@@ -103,13 +103,18 @@ class Ctrl{
 		})
 		.then(doc => {
 			if (!doc) return this.model.newAndSave(body)
-			if (doc && doc._id) return res.tools.setJson(1, '用户名已存在')
+			//if (doc && doc._id) return res.tools.setJson(1, '用户名已存在')
+			if (doc && doc._id) return res.tools.setJson(0, '登录成功', {
+				token: res.jwt.setToken(doc._id)
+			})		
 		})
+		/*
 		.then(doc => {
 			if (doc && doc._id) return res.tools.setJson(0, '注册成功', {
 				token: res.jwt.setToken(doc._id)
 			})
 		})
+		*/
 		.catch(err => next(err))
 	}
 
