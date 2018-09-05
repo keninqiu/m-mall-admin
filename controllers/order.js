@@ -269,7 +269,7 @@ class Ctrl{
 				console.log('result:')
 				console.log(result)
 				var prepay_id = result.prepay_id[0];
-				var timeStamp = Math.floor(Date.now() / 1000)
+				var timeStamp = Math.floor(Date.now() / 1000).toString()
 				var randomstring = require("randomstring");
 				var nonceStr = randomstring.generate();	
 				var packageStr = 'prepay_id=' + prepay_id	
@@ -278,6 +278,7 @@ class Ctrl{
 				var stringSignTemp=stringA+"&key=" + config.wechat.key;
 				var paySign=md5(stringSignTemp).toUpperCase();
 				var data = {
+					appId:config.wechat.appid,
 					timeStamp:timeStamp,
 					nonceStr:nonceStr,
 					package:packageStr,
