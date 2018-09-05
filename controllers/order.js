@@ -191,7 +191,7 @@ class Ctrl{
 		var request = require('request');
 		
 		var openid = username;
-		orderId = 'dfwaefeawfrrrrgrferfrew2';
+		//orderId = 'dfwaefeawfrrrrgrferfrew2';
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
