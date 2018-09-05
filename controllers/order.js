@@ -190,6 +190,7 @@ class Ctrl{
 		var request = require('request');
 		var md5 = require('md5');
 		var openid = username;
+		orderId = 'dfwaefeawfrrrrrew2';
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
@@ -222,11 +223,17 @@ class Ctrl{
 		    	}  
 		        if (!error && response.statusCode == 200) {
 		            console.log(body)
-		            var parser = require('node-xml2json')
+		            var parseString = require('xml2js').parseString;
+					parseString(body, function (err, result) {
+					    console.log(result);
+					    resolve(result.xml)
+					});		            
+		            /*
 		            var json = parser.parser(body)
 		            console.log(json)
 		            console.log(json.xml)
 		            resolve(json.xml)
+		            */
 		        }
 		    }
 		);	
