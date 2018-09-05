@@ -191,7 +191,7 @@ class Ctrl{
 		var request = require('request');
 		
 		var openid = username;
-		//orderId = 'dfwaefeawfrrrrgrferfrew2';
+		//orderId = 'fafwarwear34daewfaw';
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
@@ -274,11 +274,11 @@ class Ctrl{
 				var nonceStr = randomstring.generate();	
 				var packageStr = 'prepay_id=' + prepay_id	
 				var signType = 'MD5'	
-				var stringA = "appid=" + config.wechat.appid + "&nonceStr="+nonceStr+"&package="+packageStr+"&signType="+signType+"&timeStamp="+timeStamp;
+				var stringA = "appId=" + config.wechat.appid + "&nonceStr="+nonceStr+"&package="+packageStr+"&signType="+signType+"&timeStamp="+timeStamp;
 				var stringSignTemp=stringA+"&key=" + config.wechat.key;
+				console.log('stringSignTemp=' + stringSignTemp)
 				var paySign=md5(stringSignTemp).toUpperCase();
 				var data = {
-					appId:config.wechat.appid,
 					timeStamp:timeStamp,
 					nonceStr:nonceStr,
 					package:packageStr,
