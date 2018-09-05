@@ -1,5 +1,6 @@
 import proxy from '../proxy'
 import config from '../config'
+var md5 = require('md5');
 class Ctrl{
 	constructor(app) {
 		Object.assign(this, {
@@ -188,9 +189,9 @@ class Ctrl{
 		console.log('username=' + username)
 		console.log('totalAmount=' + totalAmount)
 		var request = require('request');
-		var md5 = require('md5');
+		
 		var openid = username;
-		//orderId = 'dfwaefeawfrrrrrew2';
+		orderId = 'dfwaefeawfrrrrgrferfrew2';
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
@@ -225,7 +226,7 @@ class Ctrl{
 		            console.log(body)
 		            var parseString = require('xml2js').parseString;
 					parseString(body, function (err, result) {
-					    console.log(result);
+					    //console.log(result);
 					    resolve(result.xml)
 					});		            
 		            /*
@@ -236,7 +237,7 @@ class Ctrl{
 		            */
 		        }
 		    }
-		);	
+		);	 
 		});	
 	}
 	wechatPay(req, res, next) {
@@ -267,7 +268,23 @@ class Ctrl{
 			this.unifiedorder(orderId,username,totalAmount).then(result => {
 				console.log('result:')
 				console.log(result)
-				res.tools.setJson(0, '调用成功',result)
+				var prepay_id = result.prepay_id[0];
+				var timeStamp = Math.floor(Date.now() / 1000)
+				var randomstring = require("randomstring");
+				var nonceStr = randomstring.generate();	
+				var packageStr = 'prepay_id=' + prepay_id	
+				var signType = 'MD5'	
+				var stringA = "appid=" + config.wechat.appid + "&nonceStr="+nonceStr+"&package="+packageStr+"&signType="+signType+"&timeStamp="+timeStamp;
+				var stringSignTemp=stringA+"&key=" + config.wechat.key;
+				var paySign=md5(stringSignTemp).toUpperCase();
+				var data = {
+					timeStamp:timeStamp,
+					nonceStr:nonceStr,
+					package:packageStr,
+					signType:signType,
+					paySign:paySign
+				}
+				res.tools.setJson(0, '调用成功',data)
 			})
 
 		})
