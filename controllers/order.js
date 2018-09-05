@@ -222,8 +222,8 @@ class Ctrl{
 		    	}  
 		        if (!error && response.statusCode == 200) {
 		            console.log(body)
-		            var parser = require('xml2json-light')
-		            var json = JSON.parse(parser.xml2json(body))
+		            var parser = require('node-xml2json')
+		            var json = parser.parser(body)
 		            console.log(json)
 		            console.log(json.xml)
 		            resolve(json.xml)
