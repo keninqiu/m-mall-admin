@@ -221,7 +221,7 @@ class Ctrl{
 		    		reject(err);
 		    	}  
 		        if (!error && response.statusCode == 200) {
-		            //console.log(body)
+		            console.log(body)
 		            var parser = require('xml2json-light')
 		            var json = JSON.parse(parser.xml2json(body))
 		            console.log(json)
