@@ -32,6 +32,10 @@ export default {
 	},
 	wechat: {
 		appid: 'wx192b22a71f2b6ceb', 
-		secret: 'b7f1891d12262290ed9a5510529bdd2d', 
+		secret: 'b7f1891d12262290ed9a5510529bdd2d',
+		mch_id: '1510812691',
+		notify_url: 'https://wx.xingfangsiyuan.cn/api/common/wxpay',
+		key: '136791034471322645509813679103xM',
 	},
+
 }

@@ -1,5 +1,5 @@
 import proxy from '../proxy'
-
+import config from '../config'
 class Ctrl{
 	constructor(app) {
 		Object.assign(this, {
@@ -24,6 +24,7 @@ class Ctrl{
 		this.app.get('/api/order', this.getAll.bind(this))
 		this.app.get('/api/order/:id', this.get.bind(this))
 		this.app.post('/api/order', this.post.bind(this))
+		this.app.post('/api/order/wechatPay', this.wechatPay.bind(this))
 		this.app.put('/api/order/:id', this.put.bind(this))
 		this.app.delete('/api/order/:id', this.delete.bind(this))
 	}
@@ -183,6 +184,88 @@ class Ctrl{
 		.catch(err => next(err))
 	}
 
+	unifiedorder(orderId,username,totalAmount) {
+		console.log('username=' + username)
+		console.log('totalAmount=' + totalAmount)
+		var request = require('request');
+		var md5 = require('md5');
+		var openid = username;
+		var out_trade_no = orderId;
+		var randomstring = require("randomstring");
+		var nonce_str = randomstring.generate();
+		var stringA = "appid=" + config.wechat.appid + "&attach=支付测试&body=APP支付测试&mch_id="+config.wechat.mch_id+"&nonce_str="+nonce_str+"&notify_url="+config.wechat.notify_url+"&openid="+openid+"&out_trade_no="+out_trade_no+"&spbill_create_ip=14.23.150.211&total_fee="+totalAmount+"&trade_type=JSAPI";
+		var stringSignTemp=stringA+"&key=" + config.wechat.key;
+		var sign=md5(stringSignTemp).toUpperCase();
+		var body = '<xml>\
+		   <appid>' + config.wechat.appid + '</appid>\
+		   <attach>支付测试</attach>\
+		   <body>APP支付测试</body>\
+		   <mch_id>'+config.wechat.mch_id+'</mch_id>\
+		   <nonce_str>'+nonce_str+'</nonce_str>\
+		   <notify_url>'+config.wechat.notify_url+'</notify_url>\
+		   <openid>'+openid+'</openid>\
+		   <out_trade_no>'+out_trade_no+'</out_trade_no>\
+		   <spbill_create_ip>14.23.150.211</spbill_create_ip>\
+		   <total_fee>'+totalAmount+'</total_fee>\
+		   <trade_type>JSAPI</trade_type>\
+		   <sign>'+sign+'</sign>\
+		</xml>';
+		return new Promise(function(resolve, reject) {
+		request.post(
+		    {url:'https://api.mch.weixin.qq.com/pay/unifiedorder',
+		    body : body,
+		    headers: {'Content-Type': 'text/xml'}
+		    },
+		    function (error, response, body) {      
+		    	if(error) {
+		    		reject(err);
+		    	}  
+		        if (!error && response.statusCode == 200) {
+		            //console.log(body)
+		            var parser = require('xml2json')
+		            var json = JSON.parse(parser.toJson(body))
+		            console.log(json)
+		            console.log(json.xml)
+		            resolve(json.xml)
+		        }
+		    }
+		);	
+		});	
+	}
+	wechatPay(req, res, next) {
+		var orderId = req.body.id
+		const query = {
+			_id : orderId,
+		}
+
+		const params = {
+			query  : query, 
+			fields : {totalAmount:1,user:1}, 
+			options: {}, 
+		}
+
+
+		const options = {
+			path    : 'user', 
+			select  : 'username', 
+		}
+		this.model.findOneAndPopulateAsync(params,options)
+		.then(doc => {
+			if (!doc) return res.tools.setJson(1, '资源不存在或已删除')
+			console.log('doc=')
+			console.log(doc)
+			var totalAmount = doc.totalAmount
+			console.log(totalAmount)
+			var username = doc.user.username
+			this.unifiedorder(orderId,username,totalAmount).then(result => {
+				console.log('result:')
+				console.log(result)
+				res.tools.setJson(0, '调用成功',result)
+			})
+
+		})
+		.catch(err => next(err))		
+	}
 	/**
 	 * @api {post} /order 新建一个资源
 	 * @apiDescription 新建一个资源
