@@ -75,7 +75,7 @@ mochawesome-reports/*
 
 node_modules
 bower_components
-
+config.js
 
 
 
