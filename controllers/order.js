@@ -190,7 +190,7 @@ class Ctrl{
 		var request = require('request');
 		var md5 = require('md5');
 		var openid = username;
-		orderId = 'dfwaefeawfrrrrrew2';
+		//orderId = 'dfwaefeawfrrrrrew2';
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
