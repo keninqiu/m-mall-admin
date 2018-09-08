@@ -186,6 +186,7 @@ class Ctrl{
 	}
 
 	unifiedorder(orderId,username,totalAmount) {
+		totalAmount = totalAmount * 100;
 		console.log('username=' + username)
 		console.log('totalAmount=' + totalAmount)
 		var request = require('request');
@@ -195,13 +196,15 @@ class Ctrl{
 		var out_trade_no = orderId;
 		var randomstring = require("randomstring");
 		var nonce_str = randomstring.generate();
-		var stringA = "appid=" + config.wechat.appid + "&attach=支付测试&body=APP支付测试&mch_id="+config.wechat.mch_id+"&nonce_str="+nonce_str+"&notify_url="+config.wechat.notify_url+"&openid="+openid+"&out_trade_no="+out_trade_no+"&spbill_create_ip=14.23.150.211&total_fee="+totalAmount+"&trade_type=JSAPI";
+		var attach = "微信支付";
+		var body = "订单编号：" + orderId;
+		var stringA = "appid=" + config.wechat.appid + "&attach="+attach+"&body="+body+"&mch_id="+config.wechat.mch_id+"&nonce_str="+nonce_str+"&notify_url="+config.wechat.notify_url+"&openid="+openid+"&out_trade_no="+out_trade_no+"&spbill_create_ip=14.23.150.211&total_fee="+totalAmount+"&trade_type=JSAPI";
 		var stringSignTemp=stringA+"&key=" + config.wechat.key;
 		var sign=md5(stringSignTemp).toUpperCase();
 		var body = '<xml>\
 		   <appid>' + config.wechat.appid + '</appid>\
-		   <attach>支付测试</attach>\
-		   <body>APP支付测试</body>\
+		   <attach>'+attach+'</attach>\
+		   <body>'+body+'</body>\
 		   <mch_id>'+config.wechat.mch_id+'</mch_id>\
 		   <nonce_str>'+nonce_str+'</nonce_str>\
 		   <notify_url>'+config.wechat.notify_url+'</notify_url>\
