@@ -4,6 +4,7 @@ const Schema = mongoose.Schema({
 	name     : String,
 	remark   : String,
 	show_in_menu   : Boolean,
+	images   : Array,
 	create_at: {
 		type   : Date,
 		default: Date.now(),

@@ -172,6 +172,7 @@ class Ctrl{
 			name  : req.body.name, 
 			remark: req.body.remark, 
 			show_in_menu: req.body.show_in_menu,
+			images: req.body.images, 
 		}
 
 		this.model.post(body)
@@ -219,6 +220,7 @@ class Ctrl{
 		const body = {
 			name  : req.body.name, 
 			remark: req.body.remark, 
+			images: req.body.images, 
 			show_in_menu: req.body.show_in_menu,
 		}
 
